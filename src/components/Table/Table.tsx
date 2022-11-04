@@ -1,4 +1,13 @@
-const Table = () => {
+interface ITech {
+  tech: string;
+  tipo: string;
+}
+
+interface ITable {
+  data?: ITech[];
+}
+
+const Table = ({ data }: ITable) => {
   return (
     <table className="table table-striped">
       <thead>
@@ -8,10 +17,15 @@ const Table = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>React</td>
-          <td>Frontend</td>
-        </tr>
+        {
+        data !== undefined && data.map((tech, index) => {
+          return (
+            <tr key={index}>
+              <td>{tech.tech}</td>
+              <td>{tech.tipo}</td>
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   );
