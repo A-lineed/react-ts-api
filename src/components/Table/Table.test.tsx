@@ -8,4 +8,9 @@ describe("Table", () => {
     render(<Table data={mockData} />);
     expect(screen.getAllByRole("row")).toHaveLength(1 + mockData.length);
   });
+
+  it('Deve renderizar a tabela caso não receba dados', () => {
+    render(<Table/>)
+    expect(screen.getAllByRole("row")).toHaveLength(1);
+  })
 });
