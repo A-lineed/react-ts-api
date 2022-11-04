@@ -1,8 +1,10 @@
+import Layout from "../components/Layout/Layout";
+
 
 
 const Perfil = () => {
     return (
-      <h1>Hello world</h1>
+     <Layout> Perfil </Layout>
     );
 }
 
