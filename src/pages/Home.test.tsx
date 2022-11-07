@@ -13,6 +13,7 @@ jest.mock("react-router-dom", () => ({
 
 describe("Home", () => {
   it("Deve informar o usuário e ser redirecionado para a página de perfil ", async () => {
+    const user = 'aline';
     render(
       <BrowserRouter>
         <Home />
@@ -23,10 +24,10 @@ describe("Home", () => {
     //expect(screen.getByText("Login")).toBeInTheDocument();
     const button = screen.getByRole("button", { name: "Entrar" });
     fireEvent.change(input, {
-      target: { value: "usuario" },
+      target: { value: "aline" },
     });
     fireEvent.click(button);
-    expect(mockHistoryPush).toHaveBeenCalled();
+    expect(mockHistoryPush).toHaveBeenCalledWith(`/${user}`);
   });
 
   it("Não deve redirecionar para a página de perfil, caso o usuário não seja informado", () => {

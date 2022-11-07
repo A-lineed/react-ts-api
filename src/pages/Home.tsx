@@ -12,7 +12,7 @@ const Home = () => {
     if(user.length === 0) {
       return alert('Por favor, informe um usuário')
     }
-    history.push("/perfil");
+  history.push(`/${user}`);
   };
   return (
     <Layout>
