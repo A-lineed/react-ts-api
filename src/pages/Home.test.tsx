@@ -19,9 +19,28 @@ describe("Home", () => {
       </BrowserRouter>
     );
 
+    const input = screen.getByRole("textbox", { name: "User" });
     //expect(screen.getByText("Login")).toBeInTheDocument();
     const button = screen.getByRole("button", { name: "Entrar" });
+    fireEvent.change(input, {
+      target: { value: "usuario" },
+    });
     fireEvent.click(button);
     expect(mockHistoryPush).toHaveBeenCalled();
+  });
+
+  it("Não deve redirecionar para a página de perfil, caso o usuário não seja informado", () => {
+    window.alert = jest.fn()
+    render(
+      <BrowserRouter>
+        <Home />
+      </BrowserRouter>
+    );
+
+    const button = screen.getByRole("button", { name: "Entrar" });
+
+    fireEvent.click(button);
+    expect(mockHistoryPush).not.toHaveBeenCalled()
+    expect(window.alert).toHaveBeenCalled()
   });
 });
