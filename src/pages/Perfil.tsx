@@ -1,4 +1,5 @@
 import { useParams, useHistory } from "react-router-dom";
+import gitApi from "../api/github";
 import Layout from "../components/Layout/Layout";
 import Table from "../components/Table/Table";
 
@@ -9,9 +10,12 @@ const Perfil = () => {
 
 
 
-  if(user !== 'aline') {
-    history.push('/')
-  }
+  gitApi.getUser(user)
+      .then(response => console.log(response))
+      .catch(error => {
+        console.log(error)
+      history.push('/')
+      });
 
   return (
     <Layout>

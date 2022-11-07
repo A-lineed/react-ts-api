@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter, useHistory } from "react-router-dom";
+import gitApi from "../api/github";
 import Home from "./Home";
 
 const mockHistoryPush = jest.fn();
@@ -13,6 +14,7 @@ jest.mock("react-router-dom", () => ({
 
 describe("Home", () => {
   it("Deve informar o usuário e ser redirecionado para a página de perfil ", async () => {
+    gitApi.getUser = jest.fn().mockResolvedValue({login: 'A-lineed'})
     const user = 'aline';
     render(
       <BrowserRouter>
@@ -27,7 +29,7 @@ describe("Home", () => {
       target: { value: "aline" },
     });
     fireEvent.click(button);
-    expect(mockHistoryPush).toHaveBeenCalledWith(`/${user}`);
+    expect(gitApi.getUser).toHaveBeenCalledWith(user);
   });
 
   it("Não deve redirecionar para a página de perfil, caso o usuário não seja informado", () => {

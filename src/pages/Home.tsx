@@ -1,18 +1,25 @@
 import Layout from "../components/Layout/Layout";
 import { useState, MouseEvent } from "react";
 import { useHistory } from "react-router-dom";
+import gitApi from "../api/github";
 
 const Home = () => {
-
-  const [user, setUser] = useState('')
+  const [user, setUser] = useState("");
+  const [invalid, setInvalid] = useState(false);
   const history = useHistory();
 
   const handleClick = async (event: MouseEvent) => {
     event.preventDefault();
-    if(user.length === 0) {
-      return alert('Por favor, informe um usuário')
+    if (user.length === 0) {
+      return alert("Por favor, informe um usuário");
     }
-  history.push(`/${user}`);
+
+    gitApi.getUser(user)
+      .then(response => history.push(`/${response.login}`))
+      .catch(error => {
+        console.log(error);
+        setInvalid(true);
+      });
   };
   return (
     <Layout>
@@ -22,16 +29,23 @@ const Home = () => {
           <label htmlFor="gitUser" className="form-label">
             Usuário do GitHub
           </label>
-          <input type="text" 
+          <input
+            type="text"
             className="form-control"
-            id="gitUser" aria-label="User"
+            id="gitUser"
+            aria-label="User"
             aria-describedby="userlHelp"
             value={user}
-            onChange={event => setUser(event.target.value)}
+            onChange={(event) => setUser(event.target.value)}
           />
           <div id="userHelp" className="form-text">
             Informe o usuário do GitHub
           </div>
+          {invalid && (
+            <div id="userHelp" className="form-text text-danger">
+              Usuário inválido
+            </div>
+          )}
         </div>
         <button
           onClick={handleClick}
