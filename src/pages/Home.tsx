@@ -1,7 +1,14 @@
 import Layout from "../components/Layout/Layout";
-import Menu from "../components/Menu/Menu";
+import { MouseEvent } from "react";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
+  const history = useHistory();
+
+  const handleClick = async (event: MouseEvent) => {
+    event.preventDefault();
+    history.push("/perfil");
+  };
   return (
     <Layout>
       <div className=" col-4 m-auto">
@@ -19,7 +26,13 @@ const Home = () => {
             Informe o usuário do GitHub
           </div>
         </div>
-        <button type="button" className="btn btn-outline-success">Entrar</button>
+        <button
+          onClick={handleClick}
+          type="button"
+          className="btn btn-outline-success"
+        >
+          Entrar
+        </button>
       </div>
     </Layout>
   );
